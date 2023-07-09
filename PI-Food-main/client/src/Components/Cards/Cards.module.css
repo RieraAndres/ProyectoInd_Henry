@@ -1,0 +1,9 @@
+.divCards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 1%;
+    
+  }
