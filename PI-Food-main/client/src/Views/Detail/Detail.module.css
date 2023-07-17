@@ -1,0 +1,107 @@
+.detail{
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+.detail img{
+    border-radius: 5%;
+    max-width:30%;
+
+}
+
+.detail h1{
+    margin: 1%;
+}
+
+.detail h3{
+  color: #eb2424;
+}
+
+.resume a {
+    text-decoration: none;
+    color: black;
+}
+
+.resume{
+    font-size: 18px;
+    font-weight:400;
+}
+.dietType{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.dietType li{
+    
+  margin: 5px 0;
+}
+
+.steps{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.steps p{
+    padding: 0;
+    margin: 1%;
+    font-size: 18px;
+    font-weight:500;
+}
+
+.buttonStart {
+  --b: 3px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color: #993939;
+
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.buttonStart:hover,
+.buttonStart:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+.buttonStart:active {
+  background: var(--color);
+  color: #fff;
+}
+
+
+.dietList{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10%;
+  list-style-type: none;
+
+}
+
+.dietList li::before{
+  content: "✓  ";
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+  
+}

@@ -1,21 +1,28 @@
-import styles from "../Card/Card.module.css"
-import {Link} from 'react-router-dom';
+import styles from "../Card/Card.module.css";
+import { NavLink } from "react-router-dom";
 
+function Card({ recipe }) {
+  const { title, image, vegetarian, dietType, id, healthScore } = recipe;
 
-function Card({recipe}){
-    const {title,image,vegetarian,dietType,id} = recipe
-
-    return (
-            <Link to={`home/${id}`}>
+const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hSBzBFU1TFUtUh7_iF_--B6HXt30saGwLA&usqp=CAU"
+  return (
+    <div className={styles.cardContainer}>
+      <NavLink to={`home/${id}`} className={styles.card}>
         <div className={styles.divCard}>
-            <h2>{title}</h2>
-            <img src={image} alt=""/>
-            <h3>Diet Types</h3>
-            {dietType.map((type)=>
-            <li>{type}</li>)}
+          <h3>{title}</h3>
+          {image ? (<img src={image} alt=""/>):(<img src={defaultImg} alt=""/>)}
+          <h4>Health Score: {healthScore}</h4>
+          <div className={styles.list}>
+            {dietType.map((type) => (
+              <li key={type}>{type}</li>
+            ))}
             {vegetarian && <li>vegetarian</li>}
+          </div>
         </div>
-            </Link>
-    )
+      </NavLink>
+    </div>
+  );
 }
+
 export default Card;
+

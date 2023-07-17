@@ -5,7 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('./Utils/Images/landing-bk.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment:fixed;   
+  background-color: rgba(255, 255, 255,0.3);
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

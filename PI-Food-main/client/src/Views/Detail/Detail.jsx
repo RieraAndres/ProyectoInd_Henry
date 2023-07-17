@@ -4,7 +4,7 @@ import { useParams, NavLink } from "react-router-dom";
 import { getRecipeDetail, clearAux } from "../../Redux/Actions/actions";
 
 import styles from "../Detail/Detail.module.css";
-import defaultImg from "../../Utils/Images/default.jpg"
+import defaultImg from "../../Utils/Images/default.jpg";
 
 function Detail() {
   const { id } = useParams();
@@ -18,38 +18,54 @@ function Detail() {
     };
   }, [dispatch, id]);
 
-  console.log(recipe);
-
   if (!recipe || !recipe.title) {
     return <p>Loading...</p>;
   }
 
+  const createMarkup = () => {
+    return { __html: recipe.resume };
+  };
+
   return (
     <div>
-      <h1>{recipe.title}</h1>
-      {recipe.image ? (
-        <img src={recipe.image} alt={recipe.title} />
-      ) : (
-        <img src={defaultImg} alt={recipe.title} />
-      )}
-      <h3>Health Score: {recipe.healthScore}</h3>
-      {recipe.vegetarian && <li>Vegetarian</li>}
-      {recipe.dietType.map((type) => (
-        <li key={type}>{type}</li>
-      ))}
-      <p>{recipe.resume}</p>
-      <h2>Steps:</h2>
-      {recipe.steps[0].steps.map((step, index) => (
-        <div key={index}>
-          <p>
-            Step {step.number}: {step.step}
-          </p>
+      <div className={styles.detail}>
+        <NavLink to={"/home"}>
+          <button className={styles.buttonStart}>BACK HOME</button>
+        </NavLink>
+        <h1>{recipe.title}</h1>
+        {recipe.image ? (
+          <img src={recipe.image} alt={recipe.title} />
+        ) : (
+          <img src={defaultImg} alt={recipe.title} />
+        )}
+        <h3>Health Score: {recipe.healthScore}</h3>
+        <div className={styles.dietType}>
+          <ul className={styles.dietList}>
+            {recipe.vegetarian && <li>Vegetarian</li>}
+            {recipe.dietType.map((type) => (
+              <li key={type}>{type}</li>
+            ))}
+          </ul>
         </div>
-      ))}
+        <div
+          dangerouslySetInnerHTML={createMarkup()}
+          className={styles.resume}
+        />
+        <h2>Steps:</h2>
+        {recipe.steps[0] && recipe.steps[0].steps ? (
+          recipe.steps[0].steps.map((step, index) => (
+            <div key={index} className={styles.steps}>
+              <p>
+                Step {step.number}: {step.step}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>No steps available.</p>
+        )}
+      </div>
     </div>
   );
 }
 
 export default Detail;
-
-

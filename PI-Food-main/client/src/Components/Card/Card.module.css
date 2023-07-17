@@ -1,14 +1,60 @@
 .divCard{
-    border: 3px solid #000000; 
-    padding: 5px; 
-    border-radius: 10px;
-    max-width: 80%;
-    margin-top: 10px;
-    margin-bottom: 40px;
-    background-color: rgba(255, 255, 255,0.5);
-    }
+  border: 0px solid #000000;  
+  border-radius: 10px;
+  max-width: 80%;
+  height: 100%;
+  margin-top: 5%;
+  background-color: rgba(26, 23, 23, 0.5);
+  padding: 2%;
+  }
+
+.divCard h3{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  
+}
+.divCard p{
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.list li {
+  list-style-type: none;
+  
+}
+
+.list{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+.list li::before {
+  content: "✓";
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+
+}
+
 .divCard img{
-        max-width: 90%;
-        margin-top: 20px;
-        border-radius: 10%;
-      }
+  max-width: 90%;
+  margin-top: 1%;
+  border-radius: 10%;
+  }
+
+
+.divCard:hover{
+ transition: transform 0.3s ease-in-out;
+ transform: scale(1.05);
+  }
+
+.cardContainer{
+  margin-bottom: 7%;
+  text-align: center;
+}
+
+.card{
+  text-decoration: none;
+  color: #000000;
+}
