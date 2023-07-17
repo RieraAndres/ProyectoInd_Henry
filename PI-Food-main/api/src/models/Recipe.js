@@ -13,6 +13,7 @@ module.exports = (sequelize) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       image: {
         type: DataTypes.STRING,
@@ -20,13 +21,12 @@ module.exports = (sequelize) => {
       },
       vegetarian: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       vegan: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
-
       dietType: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,

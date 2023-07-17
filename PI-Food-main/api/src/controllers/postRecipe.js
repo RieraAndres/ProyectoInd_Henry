@@ -1,6 +1,6 @@
 const { Recipe } = require("../db");
 
-module.exports = async (req, res) => {
+const postRecipe = async (req, res) => {
   try {
     const {
       title,
@@ -12,23 +12,15 @@ module.exports = async (req, res) => {
       healthScore,
       steps,
     } = req.body;
-    const imageBuffer = Buffer.from(image, "base64");
-    if (
-      !title ||
-      !resume ||
-      !vegetarian ||
-      !vegan ||
-      !dietType ||
-      !healthScore ||
-      !steps
-    ) {
-      return res.status(401).send("Faltan datos");
+
+    if (!title || !resume || !dietType || !healthScore || !steps) {
+      return res.status(403).send("Faltan datos");
     }
 
     await Recipe.findOrCreate({
       where: {
         title,
-        image: imageBuffer,
+        image,
         vegetarian,
         vegan,
         dietType,
@@ -44,3 +36,5 @@ module.exports = async (req, res) => {
     return res.status(500).json(error.message);
   }
 };
+
+module.exports = postRecipe;
