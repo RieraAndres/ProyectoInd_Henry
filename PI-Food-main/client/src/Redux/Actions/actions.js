@@ -14,7 +14,7 @@ export const RESET_FILTER = "RESET_FILTER";
 export function getRecipes() {
   return async function (dispatch) {
     try {
-      const response = await axios("http://localhost:3001/food/recipe");
+      const response = await axios("/food/recipe");
       return dispatch({
         type: "GET_RECIPES",
         payload: response.data,
@@ -35,7 +35,7 @@ export function getRecipesByName(name) {
 export function getRecipeDetail(id) {
   return async function (dispatch) {
     try {
-      const response = await axios(`http://localhost:3001/food/recipe/${id}`);
+      const response = await axios(`/food/recipe/${id}`);
       return dispatch({
         type: "GET_RECIPE_DETAIL",
         payload: response.data,
@@ -55,7 +55,7 @@ export function clearAux() {
 export function getDiets() {
   return async function (dispatch) {
     try {
-      const response = await axios("http://localhost:3001/food/diets");
+      const response = await axios("/food/diets");
       return dispatch({
         type: "GET_DIETS",
         payload: response.data,
@@ -69,10 +69,7 @@ export function getDiets() {
 export function createRecipe(input) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/food/recipe",
-        input
-      );
+      const response = await axios.post("/food/recipe", input);
       return dispatch({
         type: "POST_RECIPE",
         payload: response.data,

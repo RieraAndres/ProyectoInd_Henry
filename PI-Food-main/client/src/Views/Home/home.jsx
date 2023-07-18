@@ -10,7 +10,6 @@ import styles from "../Home/home.module.css"
 function Home() {
   const dispatch = useDispatch();
   const recipesCopy = useSelector((state) => state.recipesCopy);
-  const allRecipes = useSelector((state) => state.allRecipes);
 
   const [activePage, setActivePage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,8 +52,6 @@ function Home() {
   const hasNextPage = currentPage < pageNumbers;
   const hasPrevPage = currentPage > 1;
 
-  console.log(recipesCopy);
-  console.log(allRecipes);
 
   return (
     <div className={styles.homeview}>
