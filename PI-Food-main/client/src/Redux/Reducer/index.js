@@ -25,6 +25,17 @@ function rootReducer(state = initialState, action) {
         allRecipes: action.payload,
         recipesCopy: action.payload,
       };
+    case GET_RECIPES_BY_NAME:
+      const filteredRecipesByName = state.allRecipes.results.filter((recipe) =>
+        recipe.title.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      return {
+        ...state,
+        recipesCopy: {
+          ...state.recipesCopy,
+          results: filteredRecipesByName,
+        },
+      };
 
     case GET_RECIPE_DETAIL:
       return {
@@ -49,7 +60,7 @@ function rootReducer(state = initialState, action) {
       };
     case FILTER_BY_DIET_TYPE:
       if (action.payload === "vegetarian") {
-        const filteredRecipesByDietType = state.recipesCopy.results.filter(
+        const filteredRecipesByDietType = state.allRecipes.results.filter(
           (diet) => diet.vegetarian === true
         );
         return {
@@ -60,7 +71,7 @@ function rootReducer(state = initialState, action) {
           },
         };
       } else {
-        const filteredRecipesByDietType = state.recipesCopy.results.filter(
+        const filteredRecipesByDietType = state.allRecipes.results.filter(
           (diet) => diet.dietType.includes(action.payload)
         );
         return {
@@ -72,21 +83,10 @@ function rootReducer(state = initialState, action) {
         };
       }
 
-    case GET_RECIPES_BY_NAME:
-      const filteredRecipesByName = state.allRecipes.results.filter((recipe) =>
-        recipe.title.toLowerCase().includes(action.payload.toLowerCase())
-      );
-      return {
-        ...state,
-        recipesCopy: {
-          ...state.recipesCopy,
-          results: filteredRecipesByName,
-        },
-      };
     case FILTER_BY_ORIGIN:
       let byOrigin;
       if (action.payload === "Your Recipes") {
-        byOrigin = state.recipesCopy.results.filter(
+        byOrigin = state.allRecipes.results.filter(
           (recipe) => recipe.id > 2000000
         );
       } else if (action.payload === "Web Recipes") {
@@ -105,7 +105,7 @@ function rootReducer(state = initialState, action) {
     case ORDER_FILTER:
       let order;
       if (action.payload === "A-Z") {
-        order = state.recipesCopy.results.sort((a, b) => {
+        order = [...state.recipesCopy.results].sort((a, b) => {
           const titleA = a.title.toUpperCase();
           const titleB = b.title.toUpperCase();
           if (titleA < titleB) {
@@ -118,7 +118,7 @@ function rootReducer(state = initialState, action) {
         });
       }
       if (action.payload === "Z-A") {
-        order = state.recipesCopy.results.sort((a, b) => {
+        order = [...state.recipesCopy.results].sort((a, b) => {
           const titleA = a.title.toUpperCase();
           const titleB = b.title.toUpperCase();
           if (titleA < titleB) {
@@ -131,12 +131,12 @@ function rootReducer(state = initialState, action) {
         });
       }
       if (action.payload === "High") {
-        order = state.recipesCopy.results.sort(
+        order = [...state.recipesCopy.results].sort(
           (a, b) => b.healthScore - a.healthScore
         );
       }
       if (action.payload === "Low") {
-        order = state.recipesCopy.results.sort(
+        order = [...state.recipesCopy.results].sort(
           (a, b) => a.healthScore - b.healthScore
         );
       }
@@ -152,9 +152,9 @@ function rootReducer(state = initialState, action) {
     case RESET_FILTER:
       return {
         ...state,
-        recipesCopy: state.allRecipes,
+        recipesCopy: { ...state.allRecipes },
+        allRecipes: { ...state.allRecipes },
       };
-
     default:
       return { ...state };
   }

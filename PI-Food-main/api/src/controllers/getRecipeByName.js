@@ -30,7 +30,7 @@ const getRecipeByName = async (req, res) => {
       return res.status(200).json(recipes);
     }
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send("Unable to connect to the database:", error.message);
   }
 };
 

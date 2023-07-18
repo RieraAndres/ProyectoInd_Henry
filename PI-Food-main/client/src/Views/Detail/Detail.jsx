@@ -38,6 +38,7 @@ function Detail() {
         ) : (
           <img src={defaultImg} alt={recipe.title} />
         )}
+        <p>Id: {id}</p>
         <h3>Health Score: {recipe.healthScore}</h3>
         <div className={styles.dietType}>
           <ul className={styles.dietList}>

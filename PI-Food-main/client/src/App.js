@@ -5,6 +5,7 @@ import Create from "./Views/Create/Create";
 import Detail from "./Views/Detail/Detail";
 import Home from "./Views/Home/home";
 import Landing from "./Views/Landing/Landing";
+import Error from "./Views/Error/Error";
 
 import "./App.css";
 
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/home" component={Home} />
         <Route path="/home/:id" component={Detail} />
         <Route path="/create" component={Create} />
+        <Route path="*" component={Error} />
       </Switch>
     </div>
   );

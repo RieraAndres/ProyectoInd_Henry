@@ -1,27 +1,22 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { createRecipe } from "../../Redux/Actions/actions";
 import { useDispatch } from "react-redux";
+import { validate } from "./formValidator";
 
 import styles from "../Form/Form.module.css";
 
-import { validate } from "./formValidator";
-
-function Form({diets , recipes}) {
+function Form({ diets, recipes }) {
   const dispatch = useDispatch();
-  
 
-  const [error, setError] = useState({ //Estado con errores para validar inputs
+  const [error, setError] = useState({ //seteo de arranque estos errores para informar al usuario
     title: "Title is required",
     resume: "Resume is required",
     healthScore: "Health Score is required",
     steps: "At least one step is required",
-   
+    image: "Must be a image URL or empty"
   });
 
-  
-
-
-  const [input, setInput] = useState({ //estado con los inputs que luego seran despachados para crear la receta
+  const [input, setInput] = useState({ //forma de la informacion que ire almacenando para luego despachar
     title: "",
     image: "",
     vegetarian: false,
@@ -35,101 +30,93 @@ function Form({diets , recipes}) {
         steps: [
           {
             number: 1,
-            step: ""
-          }
-        ]
-      }
-    ]
+            step: "",
+          },
+        ],
+      },
+    ],
   });
-  console.log(input);
 
-  const validateForm = () => {  //funcion validadora de inputs importada de formValidator
+  const validateForm = () => { //funcion validadora
     const errors = validate(input);
     setError(errors);
   };
 
- const handleChange = (e) => { //manejador de cambios en las checkBoxes
-  if (e.target.name === "dietTypes") { 
+  const handleChangeDietTypes = (e) => { // manejador de las checkBoxes de tipos de dietas
     const { value, checked } = e.target;
-    if (value === "vegetarian") { //vegetarian es aparte de dietTypes por lo que la seteo en true si la selecciono
-      setInput((prevInput) => ({
-        ...prevInput,
-        vegetarian: checked
-      }));
-    } else {  //voy agregando al array dietType los valores de la checkbox seleccionada
-      if (checked) {
-        setInput((prevInput) => ({
-          ...prevInput,
-          dietType: [...prevInput.dietType, value]
-        }));
-      } else {
-        setInput((prevInput) => ({ //esto soluciona bug de que no se repitan dietTypes en el array
-          ...prevInput,
-          dietType: prevInput.dietType.filter((type) => type !== value)
-        }));
-      }
-    }
-  } else if (e.target.name === "healthScore") { //seteo healthScore
+
     setInput((prevInput) => ({
       ...prevInput,
-      [e.target.name]: parseInt(e.target.value)
+      dietType: checked
+        ? [...prevInput.dietType, value]
+        : prevInput.dietType.filter((type) => type !== value),
     }));
-  } else {
+
+    validateForm();
+  };
+
+  const handleChangeHealthScore = (e) => { //manejador de  los cambios en el input HealthScore
     setInput((prevInput) => ({
       ...prevInput,
-      [e.target.name]: e.target.value
+      healthScore: parseInt(e.target.value),
     }));
-  }
 
-  validateForm();  //valido el formulario mientras cambia
-};
+    validateForm();
+  };
 
-  const handleStepChange = (sectionIndex, stepIndex, value) => { //manejador de los Steps
+  const handleChangeImageTitleResume = (e) => { //manejador de cambios en el titulo, resumen e imagen
+    setInput((prevInput) => ({
+      ...prevInput,
+      [e.target.name]: e.target.value,
+    }));
+
+    validateForm();
+  };
+
+  const handleStepChange = (sectionIndex, stepIndex, value) => { //manejador de cambios en los pasos
     const updatedSteps = [...input.steps];
     updatedSteps[sectionIndex].steps[stepIndex] = {
       ...updatedSteps[sectionIndex].steps[stepIndex],
-      step: value
+      step: value,
     };
     setInput({
       ...input,
-      steps: updatedSteps
+      steps: updatedSteps,
     });
   };
 
-  const addStep = (sectionIndex) => { //agrego un obejto al array steps
+  const addStep = (sectionIndex) => { //manejador de cambios al agregar un paso
     const updatedSteps = [...input.steps];
     updatedSteps[sectionIndex].steps.push({
       step: "",
-      number: updatedSteps[sectionIndex].steps.length + 1
+      number: updatedSteps[sectionIndex].steps.length + 1,
     });
-    setInput({  //actualizo los pasos
-      ...input,
-      steps: updatedSteps
-    });
-  };
-
-  const removeStep = (sectionIndex) => {
-    const updatedSteps = [...input.steps];
-    updatedSteps[sectionIndex].steps.pop(); // elimino el ultimo paso
     setInput({
       ...input,
-      steps: updatedSteps
+      steps: updatedSteps,
     });
   };
-  console.log(recipes);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    // Verificar si ya existe una receta con el mismo título en recipesCopy
-    const duplicateRecipe = recipes.results.find(
+  const removeStep = (sectionIndex) => { //manejador de cambios al eliminar un paso
+    const updatedSteps = [...input.steps];
+    updatedSteps[sectionIndex].steps.pop();
+    setInput({
+      ...input,
+      steps: updatedSteps,
+    });
+  };
+
+  const handleSubmit = (e) => { //manejador al hacer click en create
+    e.preventDefault(); 
+
+    const duplicateRecipe = recipes.results.find( //verifico si ya hay alguna reeceta con el mismo titulo
       (recipe) => recipe.title.toLowerCase() === input.title.toLowerCase()
     );
-  
+
     if (duplicateRecipe) {
-      window.alert("YOU ALREADY HAVE A RECIPE WITH THAT TITLE");
+      window.alert("YOU ALREADY HAVE A RECIPE WITH THAT TITLE");//si existe dublicado no dejo crear y aviso al user
     } else {
-      dispatch(createRecipe(input));
+      dispatch(createRecipe(input));//si no existe despacho y limpio el formulario
       setInput({
         title: "",
         image: "",
@@ -144,26 +131,28 @@ function Form({diets , recipes}) {
             steps: [
               {
                 number: 1,
-                step: ""
-              }
-            ]
-          }
-        ]
+                step: "",
+              },
+            ],
+          },
+        ],
       });
-  
       window.alert("RECIPE CREATED SUCCESSFULLY");
     }
+
+
   };
 
-  if(!diets || diets.length === 0){
-    return(<div className={styles.loader3}>
-    <div className={styles.circle1}></div>
-    <div className={styles.circle1}></div>
-    <div className={styles.circle1}></div>
-    <div className={styles.circle1}></div>
-    <div className={styles.circle1}></div>
-  </div>
-  )
+  if (!diets || diets.length === 0) { //para esperar que carguen las diets y luego renderizar el form
+    return (
+      <div className={styles.loader3}>
+        <div className={styles.circle1}></div>
+        <div className={styles.circle1}></div>
+        <div className={styles.circle1}></div>
+        <div className={styles.circle1}></div>
+        <div className={styles.circle1}></div>
+      </div>
+    );
   }
 
   return (
@@ -174,7 +163,7 @@ function Form({diets , recipes}) {
           <label>Title: </label>
           <input
             name="title"
-            onChange={handleChange}
+            onChange={handleChangeImageTitleResume}
             value={input.title}
             className={styles.bar}
           />
@@ -184,7 +173,7 @@ function Form({diets , recipes}) {
           <label>Resume: </label>
           <textarea
             name="resume"
-            onChange={handleChange}
+            onChange={handleChangeImageTitleResume}
             value={input.resume}
             className={styles.textarea}
           />
@@ -194,7 +183,9 @@ function Form({diets , recipes}) {
           <label>Health Score: </label>
           <input
             name="healthScore"
-            onChange={handleChange}
+            type="number"
+            min="0"
+            onChange={handleChangeHealthScore}
             value={input.healthScore.toString()}
             className={styles.bar}
           />
@@ -234,12 +225,11 @@ function Form({diets , recipes}) {
           <input
             type="text"
             name="image"
-            onChange={handleChange}
+            onChange={handleChangeImageTitleResume}
             value={input.image}
             className={styles.bar}
           />
           <span>{error.image}</span>
-
         </div>
         <div>
           <label>Select diet types: </label>
@@ -250,15 +240,15 @@ function Form({diets , recipes}) {
                   type="checkbox"
                   value={type.name}
                   name="dietTypes"
-                  checked={input[type.dietType]}
-                  onChange={handleChange}
+                  checked={input.dietType.includes(type.name)}
+                  onChange={handleChangeDietTypes}
                 />
                 <label>{type.name}</label>
               </div>
             ))}
           </div>
         </div>
-        {!error.title && !error.resume && !error.healthScore && !error.steps && !error.image && (
+        {!error.title && !error.resume && !error.healthScore && !error.steps &&!error.image && (//si existen errores no renderizo boton
           <button type="submit" onClick={handleSubmit}>
             Create
           </button>
@@ -269,4 +259,3 @@ function Form({diets , recipes}) {
 }
 
 export default Form;
-

@@ -31,7 +31,7 @@ const postRecipe = async (req, res) => {
     });
 
     const allRecipes = await Recipe.findAll();
-    return res.json(allRecipes);
+    return res.status(200).json(allRecipes);
   } catch (error) {
     return res.status(500).json(error.message);
   }

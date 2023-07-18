@@ -2,6 +2,7 @@ import Card from "../Card/Card";
 import styles from "../Cards/Cards.module.css";
 
 function Cards({ recipesCopy }) {
+  console.log(recipesCopy);
   return (
     <div className={styles.divCards}>
       {recipesCopy.results && recipesCopy.results.length > 0 ? (
