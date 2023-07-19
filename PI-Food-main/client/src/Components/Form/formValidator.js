@@ -7,6 +7,8 @@ export function validate(input) {
     errors.title = "Title is required";
   } else if (!regexTitle.test(input.title)) {
     errors.title = "Only numbers and letters are accepted";
+  } else if (input.title.length > 35) {
+    errors.title = "Title must have less than 35 letters";
   }
 
   if (!input.healthScore) {

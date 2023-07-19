@@ -78,6 +78,8 @@ form label{
     grid-template-columns: repeat(2, 1fr);
     column-gap: 5px;
     margin-bottom: 3%;
+    text-align: left;
+    margin-left: 15%;
 }
 
 
