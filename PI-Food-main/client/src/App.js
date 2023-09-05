@@ -6,10 +6,8 @@ import Detail from "./Views/Detail/Detail";
 import Home from "./Views/Home/home";
 import Landing from "./Views/Landing/Landing";
 import Error from "./Views/Error/Error";
-import axios from "axios";
 import "./App.css";
 import About from "./Views/About/About";
-axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
   return (
