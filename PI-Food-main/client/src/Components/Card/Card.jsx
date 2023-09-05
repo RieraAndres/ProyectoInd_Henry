@@ -2,10 +2,11 @@ import styles from "../Card/Card.module.css";
 import { NavLink } from "react-router-dom";
 
 function Card({ recipe }) {
-  const { title, image, vegetarian, dietType, id, healthScore } = recipe;
+  const { title, image, vegetarian, dietType, id, healthScore } = recipe; //traigo por pros lo que renderizo
 
 const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hSBzBFU1TFUtUh7_iF_--B6HXt30saGwLA&usqp=CAU"
-  return (
+ //al no configurar que la imagen sea obligatoria, si image no existe le doy este valor por default
+return (
     <div className={styles.cardContainer}>
       <NavLink to={`home/${id}`} className={styles.card}>
         <div className={styles.divCard}>

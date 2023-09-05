@@ -1,34 +1,19 @@
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-
-  .home{
+.about{
+    font-size: 15px;
+    background-color: rgba(255, 255, 255,0.5);
+    color: black;
+    border-radius: 10px;
+    width: 90%;
+    margin: auto;
+    margin-top: 12%;
+    border: 3px solid #000000;
     padding: 1%;
-  }
- 
+}
 
-  .header{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 3%;
-  }
-
-
-  .buttonStart {
+.buttonStart {
     --b: 3px;   /* border thickness */
     --s: .45em; /* size of the corner */
-    --color: #000000;
-    
+    --color: #993939;
     
     padding: calc(.5em + var(--s)) calc(.9em + var(--s));
     color: var(--color);
@@ -58,16 +43,4 @@ body {
   .buttonStart:active {
     background: var(--color);
     color: #fff;
-  }
-
-
-  .pagination button {
-    margin-left: 1%;
-  }
-
-
-  .activePageButton {
-    background-color: #221f1f; /* Cambia el color de fondo al que desees */
-    color: #ffffff; /* Cambia el color del texto al que desees */
-    /* Agrega cualquier otro estilo adicional que desees para resaltar el botón */
   }

@@ -8,6 +8,7 @@ import Landing from "./Views/Landing/Landing";
 import Error from "./Views/Error/Error";
 import axios from "axios";
 import "./App.css";
+import About from "./Views/About/About";
 axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/home" component={Home} />
         <Route path="/home/:id" component={Detail} />
         <Route path="/create" component={Create} />
+        <Route path="/about" component={About} />
         <Route path="*" component={Error} />
       </Switch>
     </div>

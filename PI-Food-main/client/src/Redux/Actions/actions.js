@@ -10,11 +10,12 @@ export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 export const FILTER_BY_DIET_TYPE = "FILTER_BY_DIET_TYPE";
 export const ORDER_FILTER = "ORDER_FILTER";
 export const RESET_FILTER = "RESET_FILTER";
+export const DELETE_RECIPE = "DELETE_RECIPE";
 
 export function getRecipes() {
   return async function (dispatch) {
     try {
-      const response = await axios("/food/recipe");
+      const response = await axios("/food/recipe"); //traigo recetas
       return dispatch({
         type: "GET_RECIPES",
         payload: response.data,
@@ -35,7 +36,7 @@ export function getRecipesByName(name) {
 export function getRecipeDetail(id) {
   return async function (dispatch) {
     try {
-      const response = await axios(`/food/recipe/${id}`);
+      const response = await axios.get(`/food/recipe/${id}`);
       return dispatch({
         type: "GET_RECIPE_DETAIL",
         payload: response.data,
@@ -104,5 +105,18 @@ export function orderFilter(concept) {
 export function resetFilter() {
   return {
     type: "RESET_FILTER",
+  };
+}
+
+export function deleteRecipe(id) {
+  return async function (dispatch) {
+    try {
+      axios.delete(`/food/recipe/${id}`);
+      return {
+        type: "DELETE_RECIPE",
+      };
+    } catch (error) {
+      return error.message;
+    }
   };
 }

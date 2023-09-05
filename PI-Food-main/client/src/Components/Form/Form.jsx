@@ -24,7 +24,7 @@ function Form({ diets, recipes }) {
     dietType: [],
     resume: "",
     healthScore: 0,
-    steps: [
+    steps: [ //esta es la forma que requiere la base de datos para poder cargarla
       {
         name: "",
         steps: [
@@ -45,7 +45,7 @@ function Form({ diets, recipes }) {
   const handleChangeDietTypes = (e) => { // manejador de las checkBoxes de tipos de dietas
     const { value, checked } = e.target;
 
-    setInput((prevInput) => ({
+    setInput((prevInput) => ({//si saco tilde limpia el array de dietTypes
       ...prevInput,
       dietType: checked
         ? [...prevInput.dietType, value]
@@ -89,7 +89,7 @@ function Form({ diets, recipes }) {
     const updatedSteps = [...input.steps];
     updatedSteps[sectionIndex].steps.push({
       step: "",
-      number: updatedSteps[sectionIndex].steps.length + 1,
+      number: updatedSteps[sectionIndex].steps.length + 1,//agrego un input de steps
     });
     setInput({
       ...input,
@@ -99,7 +99,7 @@ function Form({ diets, recipes }) {
 
   const removeStep = (sectionIndex) => { //manejador de cambios al eliminar un paso
     const updatedSteps = [...input.steps];
-    updatedSteps[sectionIndex].steps.pop();
+    updatedSteps[sectionIndex].steps.pop();//elimino input de steps
     setInput({
       ...input,
       steps: updatedSteps,
@@ -108,13 +108,12 @@ function Form({ diets, recipes }) {
 
   const handleSubmit = (e) => { //manejador al hacer click en create
     e.preventDefault(); 
-
     const duplicateRecipe = recipes.results.find( //verifico si ya hay alguna reeceta con el mismo titulo
       (recipe) => recipe.title.toLowerCase() === input.title.toLowerCase()
     );
 
     if (duplicateRecipe) {
-      window.alert("YOU ALREADY HAVE A RECIPE WITH THAT TITLE");//si existe dublicado no dejo crear y aviso al user
+      window.alert("YOU ALREADY HAVE A RECIPE WITH THAT TITLE");//si existe duplicado no dejo crear y aviso al user
     } else {
       dispatch(createRecipe(input));//si no existe despacho y limpio el formulario
       setInput({
@@ -249,7 +248,7 @@ function Form({ diets, recipes }) {
           </div>
         </div>
         {!error.title && !error.resume && !error.healthScore && !error.steps &&!error.image && (//si existen errores no renderizo boton
-          <button type="submit" onClick={handleSubmit}>
+          <button type="submit" onClick={handleSubmit} className={styles.create}>
             Create
           </button>
         )}

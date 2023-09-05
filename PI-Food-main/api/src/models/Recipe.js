@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       dietType: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.STRING), //array con elementos que deben ser strings
         allowNull: false,
       },
       resume: {
@@ -40,6 +40,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       steps: {
+        //de esta forma me queda con la misma estructura que las que vienen en la db
         type: DataTypes.ARRAY(
           DataTypes.JSONB({
             name: DataTypes.STRING,
@@ -56,6 +57,7 @@ module.exports = (sequelize) => {
     },
     {
       hooks: {
+        // esta funcion me crea un id que no colisione con los que vienen de la api
         beforeValidate: (recipe) => {
           if (!recipe.id) {
             // Generar identificador manualmente si no existe

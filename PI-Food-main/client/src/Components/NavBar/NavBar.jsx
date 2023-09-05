@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import styles from "../NavBar/NavBar.module.css";
 
-function NavBar({ handleOriginFilter, handleDietTypeFilter, handleOrderFilter, handleReset }) {
+function NavBar({ handleOriginFilter, handleDietTypeFilter, handleOrderFilter, handleReset,setCurrentPage }) {
   const [searchString, setSearchString] = useState("");
 
   const dispatch = useDispatch();
@@ -13,10 +13,11 @@ function NavBar({ handleOriginFilter, handleDietTypeFilter, handleOrderFilter, h
     setSearchString(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e) { //handler de submit para buscar por nombre
     e.preventDefault();
-    dispatch(getRecipesByName(searchString));
-    setSearchString("");
+    setCurrentPage(1) //al hacer esto vuelvo a la pagina 1 para poder buscar todas las rectas con ese nombre
+    dispatch(getRecipesByName(searchString)); 
+    setSearchString(""); //vacio la searchBar
   }
 
   return (
@@ -28,10 +29,13 @@ function NavBar({ handleOriginFilter, handleDietTypeFilter, handleOrderFilter, h
         </div>
         <div >
           <select onChange={handleOriginFilter} className={styles.selects}>
+            <option>Filter by Origin</option>
             <option  value="Your Recipes">Your Recipes</option>
             <option value="Web Recipes">Web Recipes</option>
           </select>
           <select onChange={handleDietTypeFilter} className={styles.selects}>
+          {/* le doy un valor para en el reducer no hacer nada y que se muestre en el front */}
+            <option value="avoid">Filter by diet type</option> 
             <option  value="vegetarian">Vegetarian</option>
             <option value="gluten free">Gluten free</option>
             <option value="dairy free">Dairy free</option>
@@ -45,6 +49,7 @@ function NavBar({ handleOriginFilter, handleDietTypeFilter, handleOrderFilter, h
             <option value="fodmap friendly">Fodmap friendly</option>
           </select>
           <select onChange={handleOrderFilter} className={styles.selects}>
+            <option>Order by</option>
             <option value="A-Z">Name : A-Z</option>
             <option value="Z-A">Name : Z-A</option>
             <option value="High">Health Score: high to low</option>
