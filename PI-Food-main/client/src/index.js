@@ -8,8 +8,8 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3001/";
-// axios.defaults.baseURL = "";
+// axios.defaults.baseURL = "http://localhost:3001/";
+axios.defaults.baseURL = "proyectoindhenry-production.up.railway.app";
 
 ReactDOM.render(
   <React.StrictMode>
