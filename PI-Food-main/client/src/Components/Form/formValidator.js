@@ -1,6 +1,5 @@
 export function validate(input) {
   const regexTitle = /^[a-zA-Z0-9\s]+$/;
-  const urlRegex = /^(ftp|http|https):\/\/[^"]+$/;
   const errors = {};
 
   if (!input.title) {
@@ -29,8 +28,5 @@ export function validate(input) {
     errors.steps = "At least one step is required";
   }
 
-  if (input.image && !urlRegex.test(input.image)) {
-    errors.image = "Image must be a valid URL";
-  }
   return errors;
 }

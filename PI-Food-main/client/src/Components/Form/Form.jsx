@@ -13,7 +13,6 @@ function Form({ diets, recipes }) {
     resume: "Resume is required",
     healthScore: "Health Score is required",
     steps: "At least one step is required",
-    image: "Must be a image URL or empty"
   });
 
   const [input, setInput] = useState({ //forma de la informacion que ire almacenando para luego despachar
@@ -36,7 +35,7 @@ function Form({ diets, recipes }) {
       },
     ],
   });
-
+console.log(input.image);
   const validateForm = () => { //funcion validadora
     const errors = validate(input);
     setError(errors);
@@ -71,6 +70,20 @@ function Form({ diets, recipes }) {
     }));
 
     validateForm();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // Obtener el archivo seleccionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setInput((prevInput) => ({
+          ...prevInput,
+          image: reader.result, // Almacenar la imagen en formato base64
+        }));
+      };
+      reader.readAsDataURL(file); // Leer el archivo como base64
+    }
   };
 
   const handleStepChange = (sectionIndex, stepIndex, value) => { //manejador de cambios en los pasos
@@ -222,13 +235,11 @@ function Form({ diets, recipes }) {
         <div>
           <label>Image URL: </label>
           <input
-            type="text"
+            type="file"
             name="image"
-            onChange={handleChangeImageTitleResume}
-            value={input.image}
+            onChange={handleImageChange}
             className={styles.bar}
           />
-          <span>{error.image}</span>
         </div>
         <div>
           <label>Select diet types: </label>
